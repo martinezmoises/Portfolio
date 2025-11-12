@@ -4,9 +4,9 @@ import { Code2, Github, Globe, User } from 'lucide-react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
-const TypewriterEffect = ({ text }) => {
+const TypewriterEffect = ({ text, speed = 60 }) => {
   const [displayText, setDisplayText] = useState('');
-  
+
   useEffect(() => {
     let index = 0;
     const timer = setInterval(() => {
@@ -16,10 +16,10 @@ const TypewriterEffect = ({ text }) => {
       } else {
         clearInterval(timer);
       }
-    }, 260);
-    
+    }, speed);
+
     return () => clearInterval(timer);
-  }, [text]);
+  }, [text, speed]);
 
   return (
     <span className="inline-block">
@@ -28,6 +28,7 @@ const TypewriterEffect = ({ text }) => {
     </span>
   );
 };
+
 
 const BackgroundEffect = () => (
   <div className="absolute inset-0 overflow-hidden">
@@ -47,6 +48,13 @@ const IconButton = ({ Icon }) => (
 
 const WelcomeScreen = ({ onLoadingComplete }) => {
   const [isLoading, setIsLoading] = useState(true);
+
+   // <<< configure your link text + speeds here >>>
+  const linkText = "https://portfolio-6sw5.vercel.app/";
+  const typeSpeed = 100;           // ms per character (was 460)
+  const holdAfterType = 800;      // extra time to show after typing finishes
+  const exitAnim = 400;           // time for exit animation before removing
+  const totalShowMs = linkText.length * typeSpeed + holdAfterType;
 
   useEffect(() => {
     AOS.init({
@@ -152,7 +160,7 @@ const WelcomeScreen = ({ onLoadingComplete }) => {
                 data-aos-delay="1200"
               >
                 <a
-                  href="https://www.eki.my.id"
+                  href="https://portfolio-6sw5.vercel.app/"
                   className="inline-flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-3 rounded-full relative group hover:scale-105 transition-transform duration-300"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -161,7 +169,7 @@ const WelcomeScreen = ({ onLoadingComplete }) => {
                   <div className="relative flex items-center gap-2 text-lg sm:text-xl md:text-2xl">
                     <Globe className="w-4 h-4 sm:w-5 sm:h-5 text-[#3b82f6]" />
                     <span className="bg-gradient-to-r from-[#3b82f6] to-[#06b6d4] bg-clip-text text-transparent">
-                      <TypewriterEffect text="www.eki.my.id" />
+                      <TypewriterEffect text="https://portfolio-6sw5.vercel.app/" speed={typeSpeed} />
                     </span>
                   </div>
                 </a>
